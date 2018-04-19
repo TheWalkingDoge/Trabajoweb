@@ -3,6 +3,10 @@ const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('perro', {
+        id: {
+            type: DataTypes.UUID,
+            defaultvalue: sequelize.UUIDV1,
+        },
         nombre: {
             type: DataTypes.STRING,
             allowNull: false
@@ -21,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     {
         classMethods: {
             associate: (models) => {
-                perro.belongsTo(models.role);
+                perro.belongsTo(models.paseo);
+    
             }
         },
         //paranoid: true,
