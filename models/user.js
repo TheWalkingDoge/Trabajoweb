@@ -3,10 +3,6 @@ const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('user', {
-        id: {
-            type: DataTypes.UUID,
-            defaultvalue: sequelize.UUIDV1,
-        },
         nombre: {
             type: DataTypes.STRING,
             allowNull: false
@@ -33,13 +29,12 @@ module.exports = (sequelize, DataTypes) => {
                 msg: 'La clave debe tener al menos 6 caracteres'
               }
             }
-        }
-    }, {
-        classMethods: {
-            associate: (models) => {
-                user.belongsTo(models.paseo);
-            }
         },
-        //paranoid: true,
-    });
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false
+        }
+    )}; 
+    
+    return user;
 };
