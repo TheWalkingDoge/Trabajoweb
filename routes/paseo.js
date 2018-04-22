@@ -3,30 +3,26 @@ const router = express.Router();
 const models = require('../models');
 
 router.post('/', (req, res, next) => {
-    const nombre = req.body['nombre'];
-    const apellido = req.body['apellido']
-    const telefono = req.body['telefono'];
-    const password = req.body['password'];
-    const email= req.body['email'];
-    if (nombre && apellido && telefono && password && email) {
-        models.user.create({
-            nombre: nombre,
-            apellido: apellido,
-            telefono: telefono,
-            password: password,
-            email: email
-        }).then(user => {
-            if (user) {
+    const paseador = req.body['paseador'];
+    const perro = req.body['perro']
+    const raza = req.body['raza'];
+    if (paseador && perro && raza) {
+        models.paseo.create({
+            paseador: paseador,
+            perro: perro,
+            raza: raza
+        }).then(paseo => {
+            if (paseo) {
                 res.json({
                     status: 1,
-                    statusCode: 'user/created',
+                    statusCode: 'paseo/created',
                     data: user.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/error',
-                    description: "No se pudo crear al usuarior"
+                    statusCode: 'paseo/error',
+                    description: "No se pudo crear el paseo"
                 });
             }
         }).catch(error => {
@@ -39,31 +35,31 @@ router.post('/', (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-body',
+            statusCode: 'paseo/wrong-body',
             description: 'The body is wrong! :('
         });
     }
 });
-/* GET users listing.
+/* GET paseo listing.
 
-    Example: /users/all
+    Example: /paseo/all
 
  */
 router.get('/all', (req, res, next) => {
     models.user
         .findAll()
-        .then(users => {
-            if (users) {
+        .then(paseo => {
+            if (paseo) {
                 res.json({
                     status: 1,
-                    statusCode: 'users/listing',
-                    data: users
+                    statusCode: 'paseo/listing',
+                    data: paseo
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'users/not-found',
-                    description: 'There\'s no user information!'
+                    statusCode: 'paseo/not-found',
+                    description: 'No se ha encontrado información de este paseo'
                 });
             }
         }).catch(error => {
@@ -74,30 +70,30 @@ router.get('/all', (req, res, next) => {
         });
     });
 });
-/* GET users listing.
+/* GET paseador listing.
 
-    Example: /users/max@zl.cl
+    Example: /paseador/lindorfo
 
  */
-router.get('/:email', (req, res, next) => {
-    const email = req.params.email;
-    if (email) {
+router.get('/:paseador', (req, res, next) => {
+    const paseador = req.params.paseador;
+    if (paseador) {
         models.user.findOne({
             where: {
-                email: email
+                paseador: paseador
             }
-        }).then(user => {
-            if (user) {
+        }).then(paseo => {
+            if (paseo) {
                 res.json({
                     status: 1,
-                    statusCode: 'user/found',
+                    statusCode: 'paseo/found',
                     data: user.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the email'
+                    statusCode: 'paseo/not-found',
+                    description: 'No hay ningun paseo asignado a este paseador'
                 });
             }
         }).catch(error => {
@@ -110,35 +106,37 @@ router.get('/:email', (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-email',
-            description: 'Check the email!'
+            statusCode: 'paseo/wrong-paseador',
+            description: 'Ingrese otro paseador!'
         });
     }
 });
 
-/* GET users listing.
 
-    Example: /users?email=max@zl.cl
+/* GET perro listing.
 
-router.get('/', (req, res, next) => {
-    const email = req.query.email;
-    if (email) {
-        models.user.findOne({
+    Example: /perro/dolar 
+
+ */
+router.get('/:perro', (req, res, next) => {
+    const perro = req.params.perro;
+    if (paseador) {
+        models.paseo.findOne({
             where: {
-                email: email
+                perro: perro
             }
-        }).then(user => {
-            if (user) {
+        }).then(paseo => {
+            if (paseo) {
                 res.json({
                     status: 1,
-                    statusCode: 'user/found',
+                    statusCode: 'paseo/found',
                     data: user.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the email'
+                    statusCode: 'paseo/not-found',
+                    description: 'No hay ningun paseo asignado a este perro'
                 });
             }
         }).catch(error => {
@@ -151,11 +149,12 @@ router.get('/', (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-email',
-            description: 'Check the email!'
+            statusCode: 'paseo/wrong-perro',
+            description: 'Ingrese otro perro!'
         });
     }
 });
-*/ 
+
+
 
 module.exports = router;
