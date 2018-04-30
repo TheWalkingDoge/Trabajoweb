@@ -2,11 +2,8 @@
 const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('posicion', {
-        id: {
-            type: DataTypes.UUID,
-            defaultvalue: sequelize.UUIDV1,
-        },
+    const sequelize.define('posicion', {
+    
         latitud1: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -30,15 +27,11 @@ module.exports = (sequelize, DataTypes) => {
         longitud3: {
             type: DataTypes.INTEGER,
             allowNull: false
-        },
-        
-
-    }, {
-        classMethods: {
-            associate: (models) => {
-                posicion.belongsTo(models.paseo);
-            }
-        },
-        //paranoid: true,
-    });
+        }
+    }); 
+    posicion.associate  = (models) => {
+        posicion.hasOne(models.paseo, {
+        });
+    };
+    return posicion;
 };

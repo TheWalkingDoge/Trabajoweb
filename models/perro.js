@@ -2,11 +2,7 @@
 const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('perro', {
-        id: {
-            type: DataTypes.UUID,
-            defaultvalue: sequelize.UUIDV1,
-        },
+    const sequelize.define('perro', {
         nombre: {
             type: DataTypes.STRING,
             allowNull: false
@@ -14,21 +10,16 @@ module.exports = (sequelize, DataTypes) => {
         Chip: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            isNumeric: true,
+            isNumeric: true
         },
         raza: {
             type: DataTypes.STRING,
-            allowNull: false,
-        },
-        
-    }, 
-    {
-        classMethods: {
-            associate: (models) => {
-                perro.belongsTo(models.paseo);
-    
-            }
-        },
-        //paranoid: true,
+            allowNull: false
+        }
     });
+
+    perro.associate = (models) => {
+        perro.hasOne(models.user,{});
+    };
+    return perro;
 };
