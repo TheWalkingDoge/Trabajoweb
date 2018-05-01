@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
     const nombre = req.body['nombre']
     const apellido = req.body['apellido'];
     const telefono = req.body['telefono'];
@@ -44,12 +44,76 @@ router.post('/', (req, res, next) => {
         });
     }
 });
+
+router.post('/assign', async (req, res, next) => {
+    const nombre = req.body.nombre;
+    const apellido = req.body.apellido;
+    const telefono = req.body.telefono;
+    const password = req.body.paseador;
+    const email = req.body.email;
+    if (nombre && apellido && telefono && password && email) {
+	models.paseador.findOne({
+            where: {
+                telefono: telefono
+            }
+        }).then(paseador => {
+            if (paseador) {
+                models.paseo.findOne({
+                    where: {
+                        perro: perro
+                    }
+                }).then(classX => {
+                    if (classX) {
+                        paseador.addClasses([classX]);
+                        res.json({
+                            status: 1,
+                            statusCode: 'paseador/paseo-assigned',
+                            data: {
+                                paseador: paseador.toJSON(),
+                                'paseo': classX.toJSON()
+                            }
+                        });
+                    } else {
+                        res.status(400).json({
+                            status: 0,
+                            statusCode: 'paseador/paseo-not-found',
+                            description: "No se pudo encontrar el paseo"
+                        });
+                    }
+                }).catch(error => {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'database/error',
+                        description: error.toString()
+                    });
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'paseador/not-found',
+                    description: "No se pudo encontrar el paseador"
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'paseador/wrong-parameter',
+            description: 'Los parametros ingresador son incorrectos :('
+        });
+    }
+});
 /* GET paseador listing.
 
     Example: /paseador/all
 
  */
-router.get('/all', (req, res, next) => {
+router.get('/all', async (req, res, next) => {
     models.user
         .findAll()
         .then(paseador => {
@@ -79,7 +143,7 @@ router.get('/all', (req, res, next) => {
     Example: /paseador/lindorfo@laleydelaselva.cl
 
  */
-router.get('/:email', (req, res, next) => {
+router.get('/:email', async (req, res, next) => {
     const email = req.params.email;
     if (email) {
         models.paseador.findOne({
@@ -120,7 +184,7 @@ router.get('/:email', (req, res, next) => {
     Example: /paseador/lindorfo
 
  */
-router.get('/:nombre', (req, res, next) => {
+router.get('/:nombre', async (req, res, next) => {
     const nombre = req.params.nombre;
     if (nombre) {
         models.paseador.findOne({
@@ -161,7 +225,7 @@ router.get('/:nombre', (req, res, next) => {
     Example: /paseador/98765432
 
  */
-router.get('/:telefono', (req, res, next) => {
+router.get('/:telefono', async (req, res, next) => {
     const telefono = req.params.telefono;
     if (telefono) {
         models.paseador.findOne({

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
     const latitud1 = req.body['latitud1'];
     const latitud2 = req.body['latitud2']
     const latitud3 = req.body['latitud3'];

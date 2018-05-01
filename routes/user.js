@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
     const nombre = req.body['nombre'];
     const apellido = req.body['apellido']
     const telefono = req.body['telefono'];
@@ -49,7 +49,7 @@ router.post('/', (req, res, next) => {
     Example: /users/all
 
  */
-router.get('/all', (req, res, next) => {
+router.get('/all', async (req, res, next) => {
     models.user
         .findAll()
         .then(users => {
@@ -79,7 +79,7 @@ router.get('/all', (req, res, next) => {
     Example: /users/max@zl.cl
 
  */
-router.get('/:email', (req, res, next) => {
+router.get('/:email', async (req, res, next) => {
     const email = req.params.email;
     if (email) {
         models.user.findOne({

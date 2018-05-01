@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-router.post('/', (req, res, next) => {
+router.post('/', async (req, res, next) => {
     const paseador = req.body['paseador'];
     const perro = req.body['perro']
     const raza = req.body['raza'];
@@ -45,7 +45,7 @@ router.post('/', (req, res, next) => {
     Example: /paseo/all
 
  */
-router.get('/all', (req, res, next) => {
+router.get('/all', async (req, res, next) => {
     models.user
         .findAll()
         .then(paseo => {
@@ -75,7 +75,7 @@ router.get('/all', (req, res, next) => {
     Example: /paseador/lindorfo
 
  */
-router.get('/:paseador', (req, res, next) => {
+router.get('/:paseador', async (req, res, next) => {
     const paseador = req.params.paseador;
     if (paseador) {
         models.user.findOne({
@@ -118,7 +118,7 @@ router.get('/:paseador', (req, res, next) => {
     Example: /perro/dolar 
 
  */
-router.get('/:perro', (req, res, next) => {
+router.get('/:perro', async (req, res, next) => {
     const perro = req.params.perro;
     if (paseador) {
         models.paseo.findOne({
