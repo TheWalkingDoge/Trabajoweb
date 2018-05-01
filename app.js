@@ -5,7 +5,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const userRouter = require('./routes/user');
+const userRouter = require('./routes/paseador');
+const userRouter = require('./routes/paseo');
+const userRouter = require('./routes/perro');
+const userRouter = require('./routes/posicion');
 
 const app = express();
 
