@@ -3,10 +3,6 @@ const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('paseo', {
-        id: {
-            type: DataTypes.UUID,
-            defaultvalue: sequelize.UUIDV1,
-        },
         paseador: {
             type: DataTypes.INTEGER,
             allowNull: false
