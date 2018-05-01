@@ -2,7 +2,7 @@
 const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('paseo', {
+    let paseo = sequelize.define('paseo', {
         paseador: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -16,14 +16,19 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        
-    }, 
-    {
-        //classMethods: {
-        //    associate: (models) => {
-         //       perro.belongsTo(models.role);
-         //   }
-        //},
-        //paranoid: true,
     });
+    paseo.associate= (models) => {
+            paseo.belongsTo(models.paseador, {
+                through: 'PaseadorClass',
+                ass: 'paseadores',
+                unique: true
+            });
+            paseo.belongsTo(models.perro, {
+                through: 'PerroClass',
+                ass: 'perros',
+                unique: true
+            });
+    };
+        //paranoid: true,
+    return perro;
 };

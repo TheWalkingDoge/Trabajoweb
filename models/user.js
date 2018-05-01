@@ -2,7 +2,7 @@
 const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('user', {
+    let user = sequelize.define('user', {
         nombre: {
             type: DataTypes.STRING,
             allowNull: false
@@ -34,7 +34,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         }
-    )}; 
-    
+    });
+    user.associate= (models) => {
+            user.hasMany(models.perro, {
+                through: 'PerroClass',
+                ass: 'perros',
+                unique: true
+            });
+    };
     return user;
 };

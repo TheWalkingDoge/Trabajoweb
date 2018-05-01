@@ -2,7 +2,7 @@
 const models = require('../models');
 
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('paseador', {
+    let classX = sequelize.define('paseador', {
         nombre: {
             type: DataTypes.STRING,
             allowNull: false
@@ -30,12 +30,14 @@ module.exports = (sequelize, DataTypes) => {
               }
             }
         }
-    }, {
-        classMethods: {
-            associate: (models) => {
-                paseador.belongsTo(models.paseo);
-            }
-        },
-        //paranoid: true,
     });
+    paseador.associate= (models) => {
+            paseador.belongsToMany(models.paseo, {
+                through: 'PaseoClass',
+                ass: 'paseos',
+                unique: true
+            });
+    };
+        //paranoid: true,
+    return paseador;
 };
