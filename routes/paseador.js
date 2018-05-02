@@ -18,7 +18,7 @@ router.post('/', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'paseador/created',
-                    data: user.toJSON()
+                    data: paseador.toJSON()
                 });
             } else {
                 res.status(400).json({
@@ -152,7 +152,7 @@ router.get('/:nombre', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'paseador/found',
-                    data: user.toJSON()
+                    data: paseador.toJSON()
                 });
             } else {
                 res.status(400).json({
@@ -193,7 +193,7 @@ router.get('/:telefono', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'paseador/found',
-                    data: user.toJSON()
+                    data: paseador.toJSON()
                 });
             } else {
                 res.status(400).json({
