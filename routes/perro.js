@@ -7,7 +7,7 @@ router.post('/', async (req, res, next) => {
     const Chip = req.body['Chip'];
     const raza = req.body['raza'];
     if (nombre && Chip && raza) {
-        models.user.create({
+        models.perro.create({
             nombre: nombre,
             Chip: Chip,
             raza: raza
@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'perro/created',
-                    data: user.toJSON()
+                    data: perro.toJSON()
                 });
             } else {
                 res.status(400).json({
