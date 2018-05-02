@@ -140,7 +140,7 @@ router.get('/all', async (req, res, next) => {
  */
 router.get('/:nombre', async (req, res, next) => {
     const nombre = req.params.nombre;
-    if (nombre) {
+    if (id) {
         models.perro.findOne({
             where: {
                 nombre: nombre
@@ -150,7 +150,7 @@ router.get('/:nombre', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'perro/found',
-                    data: perro.toJSON()
+                    data: user.toJSON()
                 });
             } else {
                 res.status(400).json({
