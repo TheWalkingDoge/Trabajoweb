@@ -12,8 +12,7 @@ router.post('/', async (req, res, next) => {
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
-            password: password,
-            estado: 0
+            password: password
         }).then(paseador => {
             if (paseador) {
                 res.json({
@@ -49,8 +48,7 @@ router.post('/assign', async (req, res, next) => {
     const apellido = req.body.apellido;
     const telefono = req.body.telefono;
     const password = req.body.paseador;
-    const estado = req.body.estado;
-    if (nombre && apellido && telefono && password && estado) {
+    if (nombre && apellido && telefono && password) {
 	models.paseador.findOne({
             where: {
                 telefono: telefono
@@ -186,10 +184,7 @@ router.get('/nombre/:nombre', async (req, res, next) => {
 router.get('/telefono/:telefono', async (req, res, next) => {
     const telefono = req.params.telefono;
     if (telefono) {
-        models.paseador.findAll({
-            attributtes: [
-                'nombre'
-            ],
+        models.paseador.findOne({
             where: {
                 telefono: telefono
             }
@@ -259,8 +254,4 @@ router.get('/apellido/:apellido', async (req,res,next) => {
         });
     }
 }); 
-
-
-
-
 module.exports = router;
