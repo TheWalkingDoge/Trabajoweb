@@ -18,11 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         } 
     });
     perro.associate= (models) => {
-            perro.belongsTo(models.paseo, {
-                through: 'PerroClass',
-                as: 'perros',
-                unique: true
-            });
+     
             perro.belongsTo(models.user, {
                 through: 'UserClass',
                 as: 'Users',

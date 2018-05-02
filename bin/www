@@ -72,7 +72,8 @@ const server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-models.sequelize.sync({
+console.log("Corriendo en el PUERTO:  ", port);
+/*models.sequelize.sync({
     force: false
 }).then(() => {
 
