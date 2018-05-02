@@ -74,12 +74,53 @@ router.get('/all', async (req, res, next) => {
         });
     });
 });
+
+/* GET user listing.
+    Example: /user/lindorfo
+ */
+router.get('/:nombre', async (req, res, next) => {
+    const nombre = req.params.nombre;
+    if (nombre) {
+        models.user.findOne({
+            where: {
+                nombre: nombre
+            }
+        }).then(user => {
+            if (user) {
+                res.json({
+                    status: 1,
+                    statusCode: 'user/found',
+                    data: user.toJSON()
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'user/not-found',
+                    description: 'El nombre que ha ingresado no corresponde a ningún usuario'
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'user/wrong-nombre',
+            description: 'Vuelva a escribir un nombre'
+        });
+    }
+});
+
 /* GET users listing.
 
     Example: /users/max@zl.cl
 
  */
-router.get('/:email', async (req, res, next) => {
+router.get('/email/:email', async (req, res, next) => {
     const email = req.params.email;
     if (email) {
         models.user.findOne({
