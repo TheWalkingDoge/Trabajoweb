@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
                 msg: 'La clave debe tener al menos 6 caracteres'
               }
             }
+        },
+        estado: {
+            type: DataTypes.INTEGER,
+            isNumeric: true
         }
     });
     paseador.associate = (models) => {
