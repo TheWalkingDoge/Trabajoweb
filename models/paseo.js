@@ -1,5 +1,5 @@
 'use strict';
-const models = require('../models');
+
 
 module.exports = (sequelize, DataTypes) => {
     let paseo = sequelize.define('paseo', {
@@ -20,15 +20,15 @@ module.exports = (sequelize, DataTypes) => {
     paseo.associate= (models) => {
             paseo.belongsTo(models.paseador, {
                 through: 'PaseadorClass',
-                ass: 'paseadores',
+                as: 'paseadores',
                 unique: true
             });
             paseo.belongsTo(models.perro, {
                 through: 'PerroClass',
-                ass: 'perros',
+                as: 'perros',
                 unique: true
             });
     };
         //paranoid: true,
-    return perro;
+    return paseo;
 };

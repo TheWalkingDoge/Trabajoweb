@@ -1,9 +1,9 @@
 'use strict';
-const models = require('../models');
+
+
 
 module.exports = (sequelize, DataTypes) => {
-    const sequelize.define('posicion', {
-    
+    let posicion = sequelize.define('posicion', {
         latitud1: {
             type: DataTypes.INTEGER,
             allowNull: false
