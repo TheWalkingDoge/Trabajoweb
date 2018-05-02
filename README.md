@@ -1,20 +1,18 @@
 # The Walking Doge
  
- Getting started
+Getting started
 -----------------
- first 
----
-npm install
----
-Problems with Sequelize?
-then:
----
-npm install --save sqlite3
----
+**First** 
+`npm install`
+
+**Problems with Sequelize? then:**
+
+`npm install --save sqlite3`
+
 
 Autores 
 -------
 
-Roberto Alvarez
-Rodolfo Romero
-Natalia Vergara
++ Roberto Alvarez
++ Rodolfo Romero
++ Natalia Vergara
