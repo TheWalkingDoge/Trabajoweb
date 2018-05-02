@@ -12,7 +12,8 @@ router.post('/', async (req, res, next) => {
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
-            password: password
+            password: password,
+            estado: 0
         }).then(paseador => {
             if (paseador) {
                 res.json({
@@ -48,7 +49,8 @@ router.post('/assign', async (req, res, next) => {
     const apellido = req.body.apellido;
     const telefono = req.body.telefono;
     const password = req.body.paseador;
-    if (nombre && apellido && telefono && password) {
+    const estado = req.body.estado;
+    if (nombre && apellido && telefono && password && estado) {
 	models.paseador.findOne({
             where: {
                 telefono: telefono
@@ -106,9 +108,7 @@ router.post('/assign', async (req, res, next) => {
     }
 });
 /* GET paseador listing.
-
     Example: /paseador/all
-
  */
 router.get('/all', async (req, res, next) => {
     models.paseador
@@ -136,9 +136,7 @@ router.get('/all', async (req, res, next) => {
     });
 });
 /* GET paseador listing.
-
     Example: /paseador/lindorfo
-
  */
 router.get('/nombre/:nombre', async (req, res, next) => {
     const nombre = req.params.nombre;
@@ -177,14 +175,15 @@ router.get('/nombre/:nombre', async (req, res, next) => {
     }
 });
 /* GET paseador listing.
-
     Example: /paseador/98765432
-
  */
 router.get('/telefono/:telefono', async (req, res, next) => {
     const telefono = req.params.telefono;
     if (telefono) {
-        models.paseador.findOne({
+        models.paseador.findAll({
+            attributtes: [
+                'nombre'
+            ],
             where: {
                 telefono: telefono
             }
@@ -254,4 +253,8 @@ router.get('/apellido/:apellido', async (req,res,next) => {
         });
     }
 }); 
+
+
+
+
 module.exports = router;
