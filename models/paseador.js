@@ -32,7 +32,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         estado: {
             type: DataTypes.INTEGER,
-            isNumeric: true
+            isNumeric: true,
+            allowNull: true
         }
     });
     paseador.associate = (models) => {
