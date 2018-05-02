@@ -8,12 +8,11 @@ router.post('/', async (req, res, next) => {
     const telefono = req.body['telefono'];
     const password = req.body['password'];
     if (nombre && apellido && telefono && password) {
-        models.user.create({
+        models.paseador.create({
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
-            password: password,
-            email: email
+            password: password
         }).then(paseador => {
             if (paseador) {
                 res.json({
@@ -58,7 +57,7 @@ router.post('/assign', async (req, res, next) => {
             if (paseador) {
                 models.paseo.findOne({
                     where: {
-                        perro: perro
+                        id: id
                     }
                 }).then(classX => {
                     if (classX) {
@@ -112,7 +111,7 @@ router.post('/assign', async (req, res, next) => {
 
  */
 router.get('/all', async (req, res, next) => {
-    models.user
+    models.paseador
         .findAll()
         .then(paseador => {
             if (paseador) {

@@ -46,7 +46,7 @@ router.post('/', async (req, res, next) => {
 
  */
 router.get('/all', async (req, res, next) => {
-    models.user
+    models.paseo
         .findAll()
         .then(paseo => {
             if (paseo) {
