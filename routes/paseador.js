@@ -140,7 +140,7 @@ router.get('/all', async (req, res, next) => {
     Example: /paseador/lindorfo
 
  */
-router.get('/:nombre', async (req, res, next) => {
+router.get('/nombre/:nombre', async (req, res, next) => {
     const nombre = req.params.nombre;
     if (nombre) {
         models.paseador.findOne({
@@ -181,10 +181,13 @@ router.get('/:nombre', async (req, res, next) => {
     Example: /paseador/98765432
 
  */
-router.get('/:telefono', async (req, res, next) => {
+router.get('/telefono/:telefono', async (req, res, next) => {
     const telefono = req.params.telefono;
     if (telefono) {
-        models.paseador.findOne({
+        models.paseador.findAll({
+            attributtes: [
+                'nombre'
+            ],
             where: {
                 telefono: telefono
             }
@@ -218,31 +221,25 @@ router.get('/:telefono', async (req, res, next) => {
     }
 });
 
-/* GET users listing.
-
-    Example: /users?email=max@zl.cl
-
- */
-/*
-router.get('/', (req, res, next) => {
-    const email = req.query.email;
-    if (email) {
-        models.user.findOne({
+router.get('/apellido/:apellido', async (req,res,next) => {
+    const apellido = req.params.apellido;
+    if (apellido) {
+        models.paseador.findOne({
             where: {
-                email: email
+                apellido: apellido
             }
-        }).then(user => {
-            if (user) {
+        }).then(paseador => {
+            if (paseador) {
                 res.json({
                     status: 1,
-                    statusCode: 'user/found',
-                    data: user.toJSON()
+                    statusCode: 'paseador/found',
+                    data: paseador.toJSON()
                 });
             } else {
                 res.status(400).json({
                     status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the email'
+                    statusCode: 'paseador/not-found',
+                    description: 'El apellido que ha ingresado no corresponde a ningún paseador'
                 });
             }
         }).catch(error => {
@@ -255,12 +252,13 @@ router.get('/', (req, res, next) => {
     } else {
         res.status(400).json({
             status: 0,
-            statusCode: 'user/wrong-email',
-            description: 'Check the email!'
+            statusCode: 'paseador/wrong-apellio',
+            description: 'Vuelva a escribir un apellido valido'
         });
     }
-});
-*/
+}); 
+
+
 
 
 module.exports = router;
