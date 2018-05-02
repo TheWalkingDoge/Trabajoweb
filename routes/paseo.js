@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'paseo/created',
-                    data: user.toJSON()
+                    data: paseo.toJSON()
                 });
             } else {
                 res.status(400).json({
@@ -87,7 +87,7 @@ router.get('/:paseador', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'paseo/found',
-                    data: user.toJSON()
+                    data: paseo.toJSON()
                 });
             } else {
                 res.status(400).json({
@@ -118,9 +118,9 @@ router.get('/:paseador', async (req, res, next) => {
     Example: /perro/dolar 
 
  */
-router.get('/:perro', async (req, res, next) => {
+router.get('/perro/:perro', async (req, res, next) => {
     const perro = req.params.perro;
-    if (paseador) {
+    if (perro) {
         models.paseo.findOne({
             where: {
                 perro: perro
@@ -130,7 +130,7 @@ router.get('/:perro', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'paseo/found',
-                    data: user.toJSON()
+                    data: paseo.toJSON()
                 });
             } else {
                 res.status(400).json({
@@ -155,6 +155,47 @@ router.get('/:perro', async (req, res, next) => {
     }
 });
 
+/* GET id listing.
+
+    Example: /id/78
+
+ */
+router.get('/id/:id', async (req, res, next) => {
+    const id = req.params.id;
+    if (id) {
+        models.paseo.findOne({
+            where: {
+                id: id
+            }
+        }).then(paseo => {
+            if (paseo) {
+                res.json({
+                    status: 1,
+                    statusCode: 'paseo/found',
+                    data: paseo.toJSON()
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'paseo/not-found',
+                    description: 'No hay ningun paseo al que le corresponda este ID'
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'paseo/wrong-perro',
+            description: 'Ingrese otro ID!'
+        });
+    }
+});
 
 
 module.exports = router;
