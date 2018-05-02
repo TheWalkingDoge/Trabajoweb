@@ -12,7 +12,8 @@ router.post('/', async (req, res, next) => {
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
-            password: password
+            password: password,
+            estado: 0
         }).then(paseador => {
             if (paseador) {
                 res.json({
@@ -48,7 +49,8 @@ router.post('/assign', async (req, res, next) => {
     const apellido = req.body.apellido;
     const telefono = req.body.telefono;
     const password = req.body.paseador;
-    if (nombre && apellido && telefono && password) {
+    const estado = req.body.estado;
+    if (nombre && apellido && telefono && password && estado) {
 	models.paseador.findOne({
             where: {
                 telefono: telefono
