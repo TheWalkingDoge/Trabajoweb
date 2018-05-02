@@ -108,9 +108,7 @@ router.post('/assign', async (req, res, next) => {
     }
 });
 /* GET paseador listing.
-
     Example: /paseador/all
-
  */
 router.get('/all', async (req, res, next) => {
     models.paseador
@@ -138,9 +136,7 @@ router.get('/all', async (req, res, next) => {
     });
 });
 /* GET paseador listing.
-
     Example: /paseador/lindorfo
-
  */
 router.get('/nombre/:nombre', async (req, res, next) => {
     const nombre = req.params.nombre;
@@ -179,9 +175,7 @@ router.get('/nombre/:nombre', async (req, res, next) => {
     }
 });
 /* GET paseador listing.
-
     Example: /paseador/98765432
-
  */
 router.get('/telefono/:telefono', async (req, res, next) => {
     const telefono = req.params.telefono;
