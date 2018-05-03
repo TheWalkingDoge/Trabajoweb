@@ -10,7 +10,7 @@ router.post('/', async (req, res, next) => {
     const longitud2 = req.body['longitud2'];
     const longitud3 = req.body['longitud3'];
     if (latitud1 && latitud2 && latitud3 && longitud1 && longitud2 && longitud3) {
-        models.user.create({
+        models.posicion.create({
             latitud1: latitud1,
             latitud2: latitud2,
             latitud3: latitud3,
@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
                 res.json({
                     status: 1,
                     statusCode: 'posicion/created',
-                    data: user.toJSON()
+                    data: posicion.toJSON()
                 });
             } else {
                 res.status(400).json({

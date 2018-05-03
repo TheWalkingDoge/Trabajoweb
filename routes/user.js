@@ -157,46 +157,5 @@ router.get('/email/:email', async (req, res, next) => {
     }
 });
 
-/* GET users listing.
-
-    Example: /users?email=max@zl.cl
-
-router.get('/', (req, res, next) => {
-    const email = req.query.email;
-    if (email) {
-        models.user.findOne({
-            where: {
-                email: email
-            }
-        }).then(user => {
-            if (user) {
-                res.json({
-                    status: 1,
-                    statusCode: 'user/found',
-                    data: user.toJSON()
-                });
-            } else {
-                res.status(400).json({
-                    status: 0,
-                    statusCode: 'user/not-found',
-                    description: 'The user was not found with the email'
-                });
-            }
-        }).catch(error => {
-            res.status(400).json({
-                status: 0,
-                statusCode: 'database/error',
-                description: error.toString()
-            });
-        });
-    } else {
-        res.status(400).json({
-            status: 0,
-            statusCode: 'user/wrong-email',
-            description: 'Check the email!'
-        });
-    }
-});
-*/ 
 
 module.exports = router;

@@ -1,0 +1,525 @@
+{
+	"info": {
+		"_postman_id": "751e18b6-da5a-4f90-85f6-f4b40cd59c48",
+		"name": "thewalkingdoge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:3000/paseador/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "esteban",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "apellido",
+							"value": "quito",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "telefono",
+							"value": "953433312",
+							"type": "text",
+							"description": ""
+						},
+						{
+							"key": "password",
+							"value": "esteban123",
+							"type": "text",
+							"description": ""
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/paseador/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"paseador",
+						""
+					]
+				},
+				"description": "Create paseador"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/paseador/apellido/roman",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/paseador/apellido/roman",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"paseador",
+						"apellido",
+						"roman"
+					]
+				},
+				"description": "GET for a paseador by apellido"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/paseo/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "paseador",
+							"value": "goofy",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "perro",
+							"value": "pluto",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "raza",
+							"value": "mediana",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/paseo/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"paseo",
+						""
+					]
+				},
+				"description": "Creat paseo"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/paseo/perro/pongo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "paseador",
+							"value": "goofy",
+							"type": "text"
+						},
+						{
+							"key": "perro",
+							"value": "yo no fui",
+							"type": "text"
+						},
+						{
+							"key": "raza",
+							"value": "grande",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/paseo/perro/pongo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"paseo",
+						"perro",
+						"pongo"
+					]
+				},
+				"description": "GET for paseo by a dog name"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/paseo/id/4",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "paseador",
+							"value": "goofy",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "perro",
+							"value": "yo no fui",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "raza",
+							"value": "grande",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/paseo/id/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"paseo",
+						"id",
+						"4"
+					]
+				},
+				"description": "GET for paseo by a dog name"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/perro/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "mente en blanco",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Chip",
+							"value": "5342",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "raza",
+							"value": "mediano",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/perro/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"perro",
+						""
+					]
+				},
+				"description": "Create perro"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/perro/pongo",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "mente en blanco",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "Chip",
+							"value": "5342",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "raza",
+							"value": "mediano",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/perro/pongo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"perro",
+						"pongo"
+					]
+				},
+				"description": "GET perro by name"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/perro/3/user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "UserId",
+							"value": "1",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/perro/3/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"perro",
+						"3",
+						"user"
+					]
+				},
+				"description": "POST para asignar un user a un perro"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/posicion/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "latitud1",
+							"value": "-123456",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "latitud2",
+							"value": "-789665",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "latitud3",
+							"value": "-745983",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "longitud1",
+							"value": "-643334",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "longitud2",
+							"value": "-345345",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "longitud3",
+							"value": "-435644",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/posicion/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"posicion",
+						""
+					]
+				},
+				"description": "POST posicion"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/user/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nombre",
+							"value": "charlie",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "apellido",
+							"value": "sheen",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "telefono",
+							"value": "96348374",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "charlie123",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "charlie@sheen.cl",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						""
+					]
+				},
+				"description": "POST user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:3000/user/email/charlie@sheen.cl",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:3000/user/email/charlie@sheen.cl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"email",
+						"charlie@sheen.cl"
+					]
+				},
+				"description": "GET user by email"
+			},
+			"response": []
+		}
+	]
+}
