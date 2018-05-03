@@ -10,7 +10,7 @@ Getting started
 `npm install --save sqlite3`
 
 
-Autores 
+Authors 
 -------
 
 + Roberto Alvarez
