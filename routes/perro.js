@@ -102,11 +102,27 @@ router.post('/assign', async (req, res, next) => {
     }
 });
 
-/* GET users listing.
 
-    Example: /users/all
 
- */
+router.post('/:id/user', async (req, res, next) => {
+    const numerito = req.params.id;
+    const usuarioid = req.body.UserId;
+    console.log(req.body);
+    models.perro.findOne({
+        where: {
+            id: numerito
+        }
+    }).then(hayperro => {
+        if (!hayperro) res.sendStatus(404);
+        return hayperro.setUsers(usuarioid)
+    })
+    .then(res.send.bind(res))
+    .catch(next);
+   
+});
+
+
+
 router.get('/all', async (req, res, next) => {
     models.perro
         .findAll()
