@@ -9,6 +9,9 @@ Getting started
 
 `npm install --save sqlite3`
 
+** READY TO ROCK? **
+
+`node bin/www`
 
 Authors 
 -------
