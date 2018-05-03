@@ -5,11 +5,11 @@ Getting started
 **First** 
 `npm install`
 
-**Problems with Sequelize? then:**
+**Problems with Sequelize? then**
 
 `npm install --save sqlite3`
 
-** READY TO ROCK? **
+**READY TO ROCK?**
 
 `node bin/www`
 

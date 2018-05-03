@@ -175,7 +175,7 @@ router.get('/nombre/:nombre', async (req, res, next) => {
     }
 });
 /* GET paseador listing.
-    Example: /paseador/98765432
+    Example: /paseador/telefono/98765432
  */
 router.get('/telefono/:telefono', async (req, res, next) => {
     const telefono = req.params.telefono;
@@ -216,7 +216,9 @@ router.get('/telefono/:telefono', async (req, res, next) => {
         });
     }
 });
-
+/* GET paseador listing.
+    Example: /paseador/apellido/boateng
+ */
 router.get('/apellido/:apellido', async (req,res,next) => {
     const apellido = req.params.apellido;
     if (apellido) {
@@ -253,8 +255,16 @@ router.get('/apellido/:apellido', async (req,res,next) => {
         });
     }
 }); 
-
-
-
-
+/* PUT paseador listing.
+    Example: /paseador/:id/lindofo
+ */
+/*
+router.put('/nombre/:id', async (req,res,next) => {
+    paseador.findByIdAndUpdate({_id:req.params.id}.then(function(){
+        paseador.findOne({_id:req.params.id}).then(function(paseador){
+            res.send(paseador);
+        })
+    }));
+});
+*/ 
 module.exports = router;
