@@ -5,12 +5,15 @@ Getting started
 **First** 
 `npm install`
 
-**Problems with Sequelize? then:**
+**Problems with Sequelize? then**
 
 `npm install --save sqlite3`
 
+**READY TO ROCK?**
 
-Autores 
+`node bin/www`
+
+Authors 
 -------
 
 + Roberto Alvarez

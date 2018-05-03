@@ -1,6 +1,6 @@
 {
   "development": {
-    "database": "superproyecto-backend",
+    "database": "the-walking-doge",
     "dialect": "sqlite",
     "logging": true,
     "pool": {
@@ -12,7 +12,7 @@
     "storage": "db.sql"
   },
   "test": {
-    "database": "superproyecto-backend",
+    "database": "the-walking-doge",
     "dialect": "sqlite",
     "logging": true,
     "pool": {
@@ -24,7 +24,7 @@
     "storage": "db.sql"
   },
   "production": {
-    "database": "superproyecto-backend",
+    "database": "the-walking-doge",
     "dialect": "sqlite",
     "logging": true,
     "pool": {
