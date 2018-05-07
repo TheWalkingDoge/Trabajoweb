@@ -197,5 +197,46 @@ router.get('/id/:id', async (req, res, next) => {
     }
 });
 
+/* GET paseo listing.
+    Asigna un ID de un paseador que exista a un paseo
+    Example: /2/goofy
+ */
+router.post('/:id/paseador', async (req, res, next) => {
+    const numerito = req.params.id;
+    const paseadorId = req.body.PaseadorId;
+    console.log(req.body);
+    models.paseo.findOne({
+        where: {
+            id: numerito
+        }
+    }).then(haypaseo => {
+        if (!haypaseo) res.sendStatus(404);
+        return haypaseo.setPaseadores(paseadorId)
+    })
+    .then(res.send.bind(res))
+    .catch(next);
+   
+});
+
+/* GET paseo listing.
+    Asigna un ID de un perro que exista a un paseo
+    Example: /2/goofy
+ */
+router.post('/:id/perro', async (req, res, next) => {
+    const numerito = req.params.id;
+    const perroId = req.body.PerroId;
+    console.log(req.body);
+    models.paseo.findOne({
+        where: {
+            id: numerito
+        }
+    }).then(haypaseo => {
+        if (!haypaseo) res.sendStatus(404);
+        return haypaseo.setPerros(perroId)
+    })
+    .then(res.send.bind(res))
+    .catch(next);
+   
+});
 
 module.exports = router;
