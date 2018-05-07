@@ -1,6 +1,4 @@
 node_modules
-<<<<<<< HEAD
-
 ##Base de Datos##
 *.sql
 
@@ -9,4 +7,4 @@ node_modules
 =======
 db.sql
 thewalkingdoge_2.pptx
->>>>>>> 03cd6faad1b23bd62cbb3478190034e465f82ce0
+
