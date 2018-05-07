@@ -102,8 +102,10 @@ router.post('/assign', async (req, res, next) => {
     }
 });
 
-
-
+/* GET perro listing.
+    Asigna un ID de un dueño que exista a un perro
+    Example: /2/goofy
+ */
 router.post('/:id/user', async (req, res, next) => {
     const numerito = req.params.id;
     const usuarioid = req.body.UserId;

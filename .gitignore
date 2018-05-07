@@ -1,7 +1,12 @@
 node_modules
+<<<<<<< HEAD
 
 ##Base de Datos##
 *.sql
 
 ##Cosas del Mac##
 *.DS_Store
+=======
+db.sql
+thewalkingdoge_2.pptx
+>>>>>>> 03cd6faad1b23bd62cbb3478190034e465f82ce0
