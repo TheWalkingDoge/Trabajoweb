@@ -1,2 +1,7 @@
 node_modules
-db.sql
+
+##Base de Datos##
+*.sql
+
+##Cosas del Mac##
+*.DS_Store
