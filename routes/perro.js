@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
+//                     metodos POST
+
 router.post('/', async (req, res, next) => {
     const nombre = req.body['nombre']
     const Chip = req.body['Chip'];
@@ -102,9 +104,9 @@ router.post('/assign', async (req, res, next) => {
     }
 });
 
-/* GET perro listing.
+/* POST  perro listing.
     Asigna un ID de un dueño que exista a un perro
-    Example: /2/goofy
+    Example: /2/user
  */
 router.post('/:id/user', async (req, res, next) => {
     const numerito = req.params.id;
@@ -123,7 +125,7 @@ router.post('/:id/user', async (req, res, next) => {
    
 });
 
-
+//                     metodos GET
 
 router.get('/all', async (req, res, next) => {
     models.perro
