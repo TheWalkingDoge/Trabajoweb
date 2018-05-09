@@ -33,7 +33,12 @@ module.exports = (sequelize, DataTypes) => {
         },
         email: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false
+        },
+        role: {
+            type: DataTypes.STRING,
+            allowNull: false,
         }
     });
     user.associate= (models) => {
