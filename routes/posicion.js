@@ -47,3 +47,28 @@ router.post('/', async (req, res, next) => {
     }
 });
 module.exports = router;
+router.get('/all', async (req, res, next) => {
+    models.posicion
+        .findAll()
+        .then(posicion => {
+            if (posicion) {
+                res.json({
+                    status: 1,
+                    statusCode: 'posicion/listing',
+                    data: posicion
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'posicion/not-found',
+                    description: 'No se ha encontrado información de este posicion'
+                });
+            }
+        }).catch(error => {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'database/error',
+            description: error.toString()
+        });
+    });
+});
