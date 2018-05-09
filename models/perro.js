@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
      
             perro.belongsTo(models.user, {
                 through: 'UserClass',
-                as: 'Users',
+                as: 'users',
                 unique: true
             });
     };

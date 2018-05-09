@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
+//                     metodos POST
+
 router.post('/', async (req, res, next) => {
     const nombre = req.body['nombre']
     const Chip = req.body['Chip'];
@@ -102,11 +104,29 @@ router.post('/assign', async (req, res, next) => {
     }
 });
 
-/* GET users listing.
-
-    Example: /users/all
-
+/* POST  perro listing.
+    Asigna un ID de un dueño que exista a un perro
+    Example: /2/user
  */
+router.post('/:id/user', async (req, res, next) => {
+    const numerito = req.params.id;
+    const usuarioid = req.body.UserId;
+    console.log(req.body);
+    models.perro.findOne({
+        where: {
+            id: numerito
+        }
+    }).then(hayperro => {
+        if (!hayperro) res.sendStatus(404);
+        return hayperro.setUsers(usuarioid)
+    })
+    .then(res.send.bind(res))
+    .catch(next);
+   
+});
+
+//                     metodos GET
+
 router.get('/all', async (req, res, next) => {
     models.perro
         .findAll()
