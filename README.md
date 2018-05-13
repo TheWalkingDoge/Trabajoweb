@@ -11,7 +11,7 @@ Getting started
 
 **READY TO ROCK?**
 
-`node bin/www`
+`npm start`
 
 Authors 
 -------
