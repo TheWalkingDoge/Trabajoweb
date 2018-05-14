@@ -1,6 +1,5 @@
 'use strict';
 
-
 module.exports = (sequelize, DataTypes) => {
     let perro =  sequelize.define('perro', {
         nombre: {
@@ -17,13 +16,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         } 
     });
-    perro.associate= (models) => {
+
+    //    ESTO SE BORRA (?) YA QUE LA ASOCIACION CON USUARIO YA ESTA TERMINADA EN models/user.js Y FUNCIONA
+    // perro.associate= (models) => {
      
-            perro.belongsTo(models.user, {
-                through: 'UserClass',
-                as: 'users',
-                unique: true
-            });
-    };
+    //         perro.belongsTo(models.user, {
+    //             through: 'UserClass',
+    //             as: 'users',
+    //             unique: true
+    //         });
+    // };
     return perro;
 };

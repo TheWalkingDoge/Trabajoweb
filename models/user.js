@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 module.exports = (sequelize, DataTypes) => {
     let user = sequelize.define('user', {
         nombre: {
@@ -37,8 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     user.associate= (models) => {
-            user.belongsToMany(models.perro, {
-                through: 'PerroClass',
+            user.hasMany(models.perro, {
                 as: 'perros',
                 unique: true
             });

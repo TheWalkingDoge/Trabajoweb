@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
+//                                          metodos POST
+
 router.post('/', async (req, res, next) => {
     const nombre = req.body['nombre'];
     const apellido = req.body['apellido']
@@ -44,6 +46,88 @@ router.post('/', async (req, res, next) => {
         });
     }
 });
+
+/* POST  perro listing.
+    Asigna un dueño(id), que exista, a un perro(id)
+    Example: /2/perro
+    NO RECUERDO SI FUNCIONA
+ */
+router.post('/:id/perro', async (req, res, next) => {
+    const numerito = req.params.id;
+    const perroid = req.body.PerroId;
+    console.log(req.body);
+    models.user.findOne({
+        where: {
+            id: numerito
+        }
+    }).then(usuario => {
+        if (!usuario) res.sendStatus(404);
+        return usuario.setPerros(perroid)
+    })
+    .then(res.send.bind(res))
+    .catch(next);
+   
+});
+
+/*    POST   user listing 
+
+        CREAR un PERRO desde el USER y al mismo tiempo asignarlo(id) al usuario(id)
+        Example :  /create/perro/1
+        FUNCIONANDO - este es el que se conserva-
+*/
+router.post('/create/perro/:id', async (req, res, next) => {
+    const iddueno = req.params.id;
+    const nombre = req.body['nombre']; 
+    const Chip = req.body['Chip'];
+    const raza = req.body['raza'];
+    if (nombre && Chip && raza) {
+        models.perro.create({
+            nombre: nombre,
+            Chip: Chip,
+            raza: raza
+        })
+        .then(perro => {
+            if (perro) {
+                res.json({
+                    status: 1,
+                    statusCode: 'perro/createrd',
+                    data: perro.toJSON()
+                });
+                models.user.findOne({
+                    where: {
+                        id: iddueno
+                    }
+                }).then(user => {
+                    user.addPerros(perro);
+                })
+            }
+            
+            else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'perro/error',
+                    description: "No se pudo crear su mascota"
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } 
+    
+    else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'perro/wrong-body',
+            description: 'The body is wrong! :('
+        });
+    }
+    
+});
+
 /* GET users listing.
 
     Example: /users/all
@@ -157,5 +241,60 @@ router.get('/email/:email', async (req, res, next) => {
     }
 });
 
+//              metodo DELETE 
+
+/* DELETE  user listing.
+
+    BORRAR un USER (debe borrar todos los perros asociados a el)
+    Example: /delete/2
+ */
+router.delete('/delete/:id', async (req, res, next) => {
+    const numerito = req.params.id;
+    const perroid = req.body.PerroId;
+    
+    if (numerito) {
+        models.user.findOne({
+            where: {
+                id: numerito
+            }
+        }).then(user => {
+            if (user) {
+                res.json({
+                    status: 1,
+                    statusCode: 'user/found',
+                    data: user.toJSON()
+                });
+                models.user.destroy({ 
+                    where: {
+                        id: numerito
+                    }
+                })
+                models.perro.destroy({ 
+                    where: {
+                        perroid: perroid
+                    }
+                })
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'user/not-found',
+                    description: 'Este id no corresponde a ningun usuario en nuestra base de datos'
+                });
+            }
+        }).catch(error => {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: error.toString()
+            });
+        });
+    } else {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'user/wrong-id',
+            description: 'Reingrese el id del usuario que desea borrar'
+        });
+    }
+});
 
 module.exports = router;
