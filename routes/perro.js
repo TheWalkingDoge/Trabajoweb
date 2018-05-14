@@ -125,6 +125,53 @@ router.post('/:id/user', async (req, res, next) => {
    
 });
 
+// router.delete('/delete/:id', async (req, res, next) => {
+//     const numerito = req.params.id;
+//     const usuarioid = req.body.UserId;
+//     if (numerito) {
+//         models.perro.findOne({
+//             where: {
+//                 id: numerito,
+//                 usersId: usuarioid
+//             }
+//         }).then(perro => {
+//             if (perro) {
+//                 res.json({
+//                     status: 1,
+//                     statusCode: 'perro/found',
+//                     data: perro.toJSON()
+//                 });
+//                 models.perro.destroy({ 
+//                     where: {
+//                         id: numerito
+                        
+//                     }
+//                 })
+//             } else {
+//                 res.status(400).json({
+//                     status: 0,
+//                     statusCode: 'perro/not-found',
+//                     description: 'Este id no corresponde a ninguna mascota en nuestra base de datos'
+//                 });
+//             }
+//         }).catch(error => {
+//             res.status(400).json({
+//                 status: 0,
+//                 statusCode: 'database/error',
+//                 description: error.toString()
+//             });
+//         });
+//     } else {
+//         res.status(400).json({
+//             status: 0,
+//             statusCode: 'perro/wrong-id',
+//             description: 'Reingrese el id de la mascota que desea borrar'
+//         });
+//     }
+// });
+
+
+
 //                     metodos GET
 
 router.get('/all', async (req, res, next) => {
