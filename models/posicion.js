@@ -29,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     }); 
-    posicion.associate  = (models) => {
-        posicion.hasOne(models.paseo, {
-        });
-    };
+   
     return posicion;
 };

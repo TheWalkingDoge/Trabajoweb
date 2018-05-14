@@ -36,13 +36,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         }
     });
-    paseador.associate = (models) => {
-            paseador.belongsToMany(models.paseo, {
-                through: 'PaseoClass',
-                as: 'paseos',
-                unique: true
-            });
-    };
+    paseador.associate= (models) => {
+        paseador.hasMany(models.paseo, {
+            as: 'paseos',
+            unique: true
+        });
+};
         //paranoid: true,
     return paseador;
 };
