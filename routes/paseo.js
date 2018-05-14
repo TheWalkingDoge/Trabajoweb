@@ -5,14 +5,12 @@ const models = require('../models');
 //                     metodos POST 
 
 router.post('/', async (req, res, next) => {
-    const paseador = req.body['paseador'];
-    const perro = req.body['perro']
-    const raza = req.body['raza'];
-    if (paseador && perro && raza) {
+    const comentario = req.body['comentario'];
+
+    if (!comentario) {
         models.paseo.create({
-            paseador: paseador,
-            perro: perro,
-            raza: raza
+            comentario: comentario
+
         }).then(paseo => {
             if (paseo) {
                 res.json({

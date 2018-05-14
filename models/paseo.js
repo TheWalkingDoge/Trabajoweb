@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     let paseo = sequelize.define('paseo', {
         comentario: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true
         }
     });
     paseo.associate= (models) => {
@@ -13,10 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             as: 'paseoperro',
             unique: true
         });
-        paseo.hasOne(models.posicion, {
-            as: 'posicionapi',
-            unique: true
-        });
+        
 
      } 
     return paseo;

@@ -29,6 +29,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     }); 
-   
+   posicion.associate=(models) => {
+    posicion.hasOne(models.paseo, {
+        as: 'posicionapi',
+        unique: true
+    });
+
+   };
     return posicion;
 };
