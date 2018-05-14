@@ -23,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
                 as: 'paseadores',
                 unique: true
             });
-            paseo.belongsTo(models.perro, {
-                through: 'PerroClass',
+            paseo.hasMany(models.perro, {
                 as: 'perros',
                 unique: true
             });

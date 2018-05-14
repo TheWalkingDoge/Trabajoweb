@@ -50,15 +50,15 @@ router.post('/', async (req, res, next) => {
 /* POST  perro listing.
     Asigna un dueño(id), que exista, a un perro(id)
     Example: /2/perro
-    NO RECUERDO SI FUNCIONA
+    ESTE METODO SE ELIMINA PUES NO TIENE SENTIDO ASIGNARLE OTRO USER AL PERRO, a menos que el user muera y se lo pasamos a otro loco ahah
  */
 router.post('/:id/perro', async (req, res, next) => {
-    const numerito = req.params.id;
+    const iddueno = req.params.id;
     const perroid = req.body.PerroId;
     console.log(req.body);
     models.user.findOne({
         where: {
-            id: numerito
+            id: iddueno
         }
     }).then(usuario => {
         if (!usuario) res.sendStatus(404);
@@ -249,13 +249,13 @@ router.get('/email/:email', async (req, res, next) => {
     Example: /delete/2
  */
 router.delete('/delete/:id', async (req, res, next) => {
-    const numerito = req.params.id;
+    const iddueno = req.params.id;
     const perroid = req.body.PerroId;
     
     if (numerito) {
         models.user.findOne({
             where: {
-                id: numerito
+                id: iddueno
             }
         }).then(user => {
             if (user) {
@@ -266,7 +266,7 @@ router.delete('/delete/:id', async (req, res, next) => {
                 });
                 models.user.destroy({ 
                     where: {
-                        id: numerito
+                        id: iddueno
                     }
                 })
                 models.perro.destroy({ 

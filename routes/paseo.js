@@ -43,18 +43,19 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-
 /* POST paseo listing.
-    Asigna un ID de un paseador que exista a un paseo
+    Asigna un paseador(id),que exista, a un paseo
     Example: /4/paseador
+    Body: PaseadorId 4
  */
+
 router.post('/:id/paseador', async (req, res, next) => {
-    const numerito = req.params.id;
+    const idpaseo = req.params.id;
     const paseadorId = req.body.PaseadorId;
     console.log(req.body);
     models.paseo.findOne({
         where: {
-            id: numerito
+            id: idpaseo
         }
     }).then(haypaseo => {
         if (!haypaseo) res.sendStatus(404);
@@ -66,16 +67,17 @@ router.post('/:id/paseador', async (req, res, next) => {
 });
 
 /* POST paseo listing.
-    Asigna un ID de un perro que exista a un paseo
+    Asigna un perro(id), que exista, a un paseo
     Example: /1/perro
+    Body: PerroId 3
  */
 router.post('/:id/perro', async (req, res, next) => {
-    const numerito = req.params.id;
+    const idpaseo = req.params.id;
     const perroId = req.body.PerroId;
     console.log(req.body);
     models.paseo.findOne({
         where: {
-            id: numerito
+            id: idpaseo
         }
     }).then(haypaseo => {
         if (!haypaseo) res.sendStatus(404);
