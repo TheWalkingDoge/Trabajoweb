@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     });
     paseador.associate= (models) => {
         paseador.hasMany(models.paseo, {
-            as: 'paseos',
+            as: 'paseando',
             unique: true
         });
 };

@@ -132,10 +132,10 @@ router.post('/assign', async (req, res, next) => {
 /* DELETE  perro listing.
     Example: /delete/2
     Body: UserId       En el body recibe el id del usuario al que le corresponde 
-    
+
  */
 router.delete('/delete/:id', async (req, res, next) => {
-    const numerito = req.params.id;
+    const idperro = req.params.id;
     const usuarioid = req.body.UserId;
     if (numerito) {
         models.perro.findOne({
@@ -152,7 +152,7 @@ router.delete('/delete/:id', async (req, res, next) => {
                 });
                 models.perro.destroy({ 
                     where: {
-                        id: numerito
+                        id: idperro
                     }
                 })
             } else {
@@ -246,6 +246,29 @@ router.get('/:nombre', async (req, res, next) => {
             description: 'Reingrese el nombre de la mascota que busca'
         });
     }
+});
+
+
+/* POST paseo listing.
+    Asigna un perro(id), que exista, a un paseo
+    Example: /1/perro
+    Body: PerroId 3
+ */
+router.post('/:id/paseo', async (req, res, next) => {
+    const idperro = req.params.id;
+    const paseoId = req.body.PaseoId;
+    console.log(req.body);
+    models.perro.findOne({
+        where: {
+            id: idperro
+        }
+    }).then(perro => {
+        if (!perro) res.sendStatus(404);
+        return perro.addPaseo(paseoId)
+    })
+    .then(res.send.bind(res))
+    .catch(next);
+   
 });
 
 module.exports = router;

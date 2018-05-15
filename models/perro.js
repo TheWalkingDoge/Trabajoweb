@@ -16,7 +16,12 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         } 
     });
-
+    perro.associate= (models) => {
+        perro.hasMany(models.paseo, {
+            as: 'paseos',
+            unique: true
+        });
+     } 
     //    ESTO SE BORRA (?) YA QUE LA ASOCIACION CON USUARIO YA ESTA TERMINADA EN models/user.js Y FUNCIONA
     // perro.associate= (models) => {
      

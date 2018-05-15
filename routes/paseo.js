@@ -57,11 +57,11 @@ router.post('/:id/paseador', async (req, res, next) => {
         }
     }).then(haypaseo => {
         if (!haypaseo) res.sendStatus(404);
-        return haypaseo.setPaseadores(paseadorId)
+        return haypaseo.addPaseando(paseadorId)
     })
     .then(res.send.bind(res))
     .catch(next);
-   
+
 });
 
 /* POST paseo listing.
@@ -79,7 +79,7 @@ router.post('/:id/perro', async (req, res, next) => {
         }
     }).then(haypaseo => {
         if (!haypaseo) res.sendStatus(404);
-        return haypaseo.setPerros(perroId)
+        return haypaseo.addPerros(perroId)
     })
     .then(res.send.bind(res))
     .catch(next);

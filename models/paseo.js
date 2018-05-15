@@ -8,13 +8,13 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         }
     });
+    /*
     paseo.associate= (models) => {
         paseo.hasMany(models.perro, {
-            as: 'paseoperro',
+            as: 'perros',
             unique: true
         });
-        
-
      } 
+     */
     return paseo;
 };

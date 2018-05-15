@@ -90,7 +90,7 @@ router.post('/create/perro/:id', async (req, res, next) => {
             if (perro) {
                 res.json({
                     status: 1,
-                    statusCode: 'perro/createrd',
+                    statusCode: 'perro/created',
                     data: perro.toJSON()
                 });
                 models.user.findOne({
