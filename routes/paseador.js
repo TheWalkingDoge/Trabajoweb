@@ -44,6 +44,48 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+/*
+    POST 
+    Asigna un paseador(id),que exista, a un paseo
+    Example: /4/paseador
+    Body: PaseadorId 4
+*/
+
+router.post('/:id/paseo', async (req, res, next) => {
+    const idpaseo = req.params.id;
+    const paseadorId = req.body.PaseadorId;
+    console.log(req.body);
+    models.paseo.findOne({
+        where: {
+            id: idpaseo
+        }
+    }).then(haypaseo => {
+        if (haypaseo) {
+            models.paseador.findOne({
+                where: {
+                    id: paseadorId
+                }
+            }).then(paseador => {
+                paseador.addPaseando(idpaseo);
+             
+                
+            })
+        }
+        else {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'database/error',
+                description: "No se encuentra al paseo en la base "
+            });
+        }
+    })
+    .then(res.send.bind(res))
+    .catch(next);
+
+});
+
+/************************************ */
+
 router.post('/assign', async (req, res, next) => {
     const nombre = req.body.nombre;
     const apellido = req.body.apellido;
