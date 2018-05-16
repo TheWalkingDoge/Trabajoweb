@@ -69,22 +69,58 @@ router.post('/:id/paseador', async (req, res, next) => {
     Example: /1/perro
     Body: PerroId 3
  */
+// router.post('/:id/perro', async (req, res, next) => {
+//     const idpaseo = req.params.id;
+//     const perroId = req.body.PerroId;
+//     console.log(req.body);
+//     models.paseo.findOne({
+//         where: {
+//             id: idpaseo
+//         }
+//     }).then(haypaseo => {
+//         if (!haypaseo) res.sendStatus(404);
+//         return haypaseo.addPerros(perroId)
+//     })
+//     .then(res.send.bind(res))
+//     .catch(next);
+   
+// });
+
+
 router.post('/:id/perro', async (req, res, next) => {
     const idpaseo = req.params.id;
     const perroId = req.body.PerroId;
-    console.log(req.body);
     models.paseo.findOne({
         where: {
             id: idpaseo
         }
     }).then(haypaseo => {
-        if (!haypaseo) res.sendStatus(404);
-        return haypaseo.addPerros(perroId)
+        if(haypaseo){
+            models.perro.findOne({
+                where: {
+                    id: perroId
+                }
+            }).then(perro => {
+                if(perro) {
+
+                }
+                perro.addPaseos(haypaseo);
+            })
+        }
+        else {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'perro/error',
+                description: "No se pudo crear su mascota"
+            });
+        }
     })
-    .then(res.send.bind(res))
-    .catch(next);
-   
+    
 });
+
+
+
+/*---------------------------- */
 
 //                     metodos GET 
 /* GET paseo listing.
