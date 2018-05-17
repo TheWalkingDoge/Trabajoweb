@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         } 
     });
     perro.associate= (models) => {
-        perro.hasMany(models.paseo, {
-            as: 'paseos',
-            unique: true
+        perro.belongsToMany(models.paseo, {
+            as: 'perrito',
+            through: 'evento',
         });
      } 
     //    ESTO SE BORRA (?) YA QUE LA ASOCIACION CON USUARIO YA ESTA TERMINADA EN models/user.js Y FUNCIONA

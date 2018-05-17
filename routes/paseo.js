@@ -6,10 +6,16 @@ const models = require('../models');
 
 router.post('/', async (req, res, next) => {
     const comentario = req.body['comentario'];
+    const estado = 'disponible';
+    const horario = req.body['horario'];
 
-    if (!comentario) {
+
+    if (estado && estado &&!comentario) {
         models.paseo.create({
-            comentario: comentario
+            comentario: comentario,
+            estado: estado,
+            horario: horario
+
 
         }).then(paseo => {
             if (paseo) {
@@ -47,22 +53,40 @@ router.post('/', async (req, res, next) => {
     Body: PaseadorId 4
  */
 
+/*--NUEVO ASIGNAR PASEADOR A PASEO--*/
 router.post('/:id/paseador', async (req, res, next) => {
     const idpaseo = req.params.id;
     const paseadorId = req.body.PaseadorId;
-    console.log(req.body);
-    models.paseo.findOne({
+    models.evento.findOne({
         where: {
-            id: idpaseo
+            paseoid: idpaseo,
+            perroId: {
+                $ne: null
+            }
         }
-    }).then(haypaseo => {
-        if (!haypaseo) res.sendStatus(404);
-        return haypaseo.addPaseando(paseadorId)
+    }).then(hayevento => {
+        if (hayevento) {
+            models.evento.update({
+                idpaseador: paseadorId,
+            }, {
+                where: {
+                    paseoId: idpaseo,
+                    perroId: {
+                        $ne: null
+                    }
+                    
+                }
+            
+            })
+        }
     })
     .then(res.send.bind(res))
     .catch(next);
 
 });
+/*--FIN--*/
+
+
 
 /* POST paseo listing.
     Asigna un perro(id), que exista, a un paseo
@@ -102,16 +126,21 @@ router.post('/:id/perro', async (req, res, next) => {
                 }
             }).then(perro => {
                 if(perro) {
-
+                    perro.addPerrito(haypaseo);
+                    res.json({
+                        status: 1,
+                        statusCode: 'paseo/perro/asignado',
+                        data: haypaseo.toJSON()
+                    });
                 }
-                perro.addPaseos(haypaseo);
+                // perro.addPaseos(haypaseo);
             })
         }
         else {
             res.status(400).json({
                 status: 0,
                 statusCode: 'perro/error',
-                description: "No se pudo crear su mascota"
+                description: "No se pudo asignar el paseo a la mascota"
             });
         }
     })
@@ -128,10 +157,14 @@ router.post('/:id/perro', async (req, res, next) => {
     Example: /paseo/all
 
  */
-router.get('/all', async (req, res, next) => {
-    models.paseo
-        .findAll()
-        .then(paseo => {
+router.get('/all/:horario', async (req, res, next) => {
+    const ventana = req.params.horario;
+    models.paseo.findOne({
+        where: {
+            horario: 'ventana',
+            estado: 'disponible'
+        }
+    }).then(paseo => {
             if (paseo) {
                 res.json({
                     status: 1,
@@ -153,6 +186,10 @@ router.get('/all', async (req, res, next) => {
         });
     });
 });
+
+
+
+
 /* GET paseador listing.
 
     Example: /paseador/lindorfo

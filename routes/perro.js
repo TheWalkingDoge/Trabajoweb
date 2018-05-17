@@ -271,4 +271,8 @@ router.post('/:id/paseo', async (req, res, next) => {
    
 });
 
+
+
+
+
 module.exports = router;

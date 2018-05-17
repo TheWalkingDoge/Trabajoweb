@@ -29,6 +29,7 @@ app.use('/paseador', paseadorRouter);
 app.use('/paseo', paseoRouter);
 app.use('/perro', perroRouter);
 app.use('/posicion', posicionRouter);
+app.use('/evento', posicionRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

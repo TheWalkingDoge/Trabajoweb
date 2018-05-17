@@ -6,15 +6,24 @@ module.exports = (sequelize, DataTypes) => {
         comentario: {
             type: DataTypes.STRING,
             allowNull: true
-        }
+        },
+        horario: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        estado: {
+            type: DataTypes.STRING,
+            allowNull: false
+        } 
+
     });
     
-    // paseo.associate= (models) => {
-    //     paseo.hasMany(models.perro, {
-    //         as: 'perros',
-    //         unique: true
-    //     });
-    //  } 
+    paseo.associate= (models) => {
+        paseo.belongsToMany(models.perro, {
+            as: 'paseito',
+            through: 'evento',
+        });
+     } 
      
     return paseo;
 };
