@@ -12,8 +12,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         estado: {
-            type: DataTypes.STRING,
-            allowNull: false
+            type: DataTypes.INTEGER,
+            defaultValue: 0 
+        },
+        paseador: {
+            type: DataTypes.INTEGER,
+            allowNull: true
+        },
+        dueno: {
+            type: DataTypes.INTEGER,
+            allowNull: true
         } 
 
     });

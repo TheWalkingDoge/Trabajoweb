@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
         email: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        estado: {
+            type: DataTypes.INTEGER,
+            defaultValue: 1
         }
     });
     user.associate= (models) => {

@@ -4,17 +4,20 @@ const models = require('../models');
 
 //                     metodos POST 
 
-router.post('/', async (req, res, next) => {
-    const comentario = req.body['comentario'];
-    const estado = 'disponible';
+/*--Crear el paseo con el dueño */
+// Permite al dueño crear un paseo 
+//     Example: /1/
+//     Body: Horario B
+
+router.post('/:id', async (req, res, next) => {
+    const iddueno = req.params.id;
     const horario = req.body['horario'];
 
-
-    if (estado && estado &&!comentario) {
+    if (horario && iddueno) {
         models.paseo.create({
-            comentario: comentario,
-            estado: estado,
-            horario: horario
+            // comentario: comentario,
+            horario: horario,
+            dueno: iddueno
 
 
         }).then(paseo => {
@@ -47,6 +50,69 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+/*--ESCRIBIR EL COMENTARIO FINAL DESPUES DEL PASEO */
+//Hay que pasar el id del paseo para guardar el comentario
+router.post('/:id/comentario', async (req,res,next) => {
+    const idpaseo = req.params.id;
+    const feedback = req.body.comentario;
+    models.paseo.update({
+        comentario: feedback,
+    }, {
+        where: {
+            id: idpaseo
+        }
+    }).then(actualizado => {
+        if(actualizado) {
+            res.json({
+                status: 1,
+                statusCode: 'paseo/comentario/asignado'
+            });
+        }
+        else {
+            res.status(400).json({
+            status: 0,
+            statusCode: 'paseo/error',
+            description: "No se pudo asignar el comentario al paseo"
+            });
+        }
+    });
+
+
+    // models.paseo.findOne({
+    //     where: {
+    //         id: idpaseo
+    //     }
+    // }).then(haypaseo => {
+    //     if(haypaseo) {
+    //         models.paseo.Update({
+    //             comentario: feedback,
+    //         }, {
+    //             where: {
+    //                 id: idpaseo
+    //             }
+    //         }).then(listopaseo) => {
+    //             if(listopaseo) {
+    //                 res.json({
+    //                     status: 1,
+    //                     statusCode: 'paseo/comentario/asignado',
+    //                     data: listopaseo.toJSON()
+    //                 });
+    //             }
+    //             else {
+    //                 res.status(400).json({
+    //                     status: 0,
+    //                     statusCode: 'paseo/error',
+    //                     description: "No se pudo asignar el comentario al paseo"
+    //                 });
+    //             }
+
+    //         }
+    //     }
+    // })
+});
+/*--FIN--*/
+
+
 /* POST paseo listing.
     Asigna un paseador(id),que exista, a un paseo
     Example: /4/paseador
@@ -54,36 +120,36 @@ router.post('/', async (req, res, next) => {
  */
 
 /*--NUEVO ASIGNAR PASEADOR A PASEO--*/
-router.post('/:id/paseador', async (req, res, next) => {
-    const idpaseo = req.params.id;
-    const paseadorId = req.body.PaseadorId;
-    models.evento.findOne({
-        where: {
-            paseoid: idpaseo,
-            perroId: {
-                $ne: null
-            }
-        }
-    }).then(hayevento => {
-        if (hayevento) {
-            models.evento.update({
-                idpaseador: paseadorId,
-            }, {
-                where: {
-                    paseoId: idpaseo,
-                    perroId: {
-                        $ne: null
-                    }
+// router.post('/:id/paseador', async (req, res, next) => {
+//     const idpaseo = req.params.id;
+//     const paseadorId = req.body.PaseadorId;
+//     models.evento.findOne({
+//         where: {
+//             paseoid: idpaseo,
+//             perroId: {
+//                 $ne: null
+//             }
+//         }
+//     }).then(hayevento => {
+//         if (hayevento) {
+//             models.evento.update({
+//                 idpaseador: paseadorId,
+//             }, {
+//                 where: {
+//                     paseoId: idpaseo,
+//                     perroId: {
+//                         $ne: null
+//                     }
                     
-                }
+//                 }
             
-            })
-        }
-    })
-    .then(res.send.bind(res))
-    .catch(next);
+//             })
+//         }
+//     })
+//     .then(res.send.bind(res))
+//     .catch(next);
 
-});
+// });
 /*--FIN--*/
 
 
@@ -157,12 +223,11 @@ router.post('/:id/perro', async (req, res, next) => {
     Example: /paseo/all
 
  */
-router.get('/all/:horario', async (req, res, next) => {
-    const ventana = req.params.horario;
+router.get('/all/', async (req, res, next) => {
+    //const ventana = req.params.horario;
     models.paseo.findOne({
         where: {
-            horario: 'ventana',
-            estado: 'disponible'
+            estado: 0
         }
     }).then(paseo => {
             if (paseo) {
