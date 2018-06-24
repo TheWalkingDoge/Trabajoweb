@@ -1,5 +1,10 @@
 const createError = require('http-errors');
-const express = require('express');
+//const express = require('express');
+var express = require('express')
+, cors = require('cors')
+, app = express();
+
+app.use(cors());
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -11,7 +16,7 @@ const paseoRouter = require('./routes/paseo');
 const perroRouter = require('./routes/perro');
 const posicionRouter = require('./routes/posicion');
 
-const app = express();
+// const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -29,7 +34,7 @@ app.use('/paseador', paseadorRouter);
 app.use('/paseo', paseoRouter);
 app.use('/perro', perroRouter);
 app.use('/posicion', posicionRouter);
-
+app.use('/evento', posicionRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
@@ -45,6 +50,16 @@ app.use((err, req, res, next) => {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+ 
+app.use((req, res, next) =>{
+    if (req.headers.origin) {
+        res.header('Access-Control-Allow-Origin', '*')
+        res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization')
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,PATCH,POST,DELETE')
+        if (req.method === 'OPTIONS') return res.send(200)
+    }
+    next()
 });
 
 module.exports = app;
