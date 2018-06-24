@@ -180,9 +180,23 @@ router.delete('/delete/:id', async (req, res, next) => {
 
 //                                    metodos GET
 
-router.get('/all', async (req, res, next) => {
+/*--OBTENER PERRO DUEÑO--*/
+// router.get('/buscar/:id', async(req, res, next) => {
+//     models.perro
+// });
+
+
+/*------------*/
+
+
+router.get('/all/:id', async (req, res, next) => {
+    const iddueno = req.params.id;
     models.perro
-        .findAll()
+        .findAll({
+            where: {
+                UserId: iddueno
+            }
+        })
         .then(perro => {
             if (perro) {
                 res.json({
