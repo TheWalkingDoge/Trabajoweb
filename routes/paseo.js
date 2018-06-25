@@ -263,9 +263,9 @@ router.get('/all/', async (req, res, next) => {
 router.get('/:paseador', async (req, res, next) => {
     const paseador = req.params.paseador;
     if (paseador) {
-        models.user.findOne({
+        models.paseo.findOne({
             where: {
-                paseador: paseador
+                paseadorId: paseador
             }
         }).then(paseo => {
             if (paseo) {
