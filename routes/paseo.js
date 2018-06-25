@@ -345,25 +345,25 @@ router.get('/perro/:perro', async (req, res, next) => {
     Example: /id/78
 
  */
-router.get('/id/:id', async (req, res, next) => {
-    const id = req.params.id;
+router.get('/dueno/:dueno', async (req, res, next) => {
+    const id = req.params.dueno;
     if (id) {
-        models.paseo.findOne({
+        models.paseo.findAll({
             where: {
-                id: id
+                dueno: id
             }
         }).then(paseo => {
             if (paseo) {
                 res.json({
                     status: 1,
                     statusCode: 'paseo/found',
-                    data: paseo.toJSON()
+                    data: paseo
                 });
             } else {
                 res.status(400).json({
                     status: 0,
                     statusCode: 'paseo/not-found',
-                    description: 'No hay ningun paseo al que le corresponda este ID'
+                    description: 'No hay ningun paseo al que le corresponda este Usuario'
                 });
             }
         }).catch(error => {
