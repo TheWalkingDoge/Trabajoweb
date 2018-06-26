@@ -358,6 +358,7 @@ router.get('/dueno/:dueno', async (req, res, next) => {
                     status: 1,
                     statusCode: 'paseo/found',
                     data: paseo
+                     // data: paseo.toJSON()
                 });
             } else {
                 res.status(400).json({
