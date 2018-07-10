@@ -4,6 +4,9 @@ const models = require('../models');
 
 //                     metodos POST
 
+/* POST  crear perro.
+    NO OCUPAR---->Ahora el perro se crea desde user.
+ */
 router.post('/', async (req, res, next) => {
     const nombre = req.body['nombre']
     const Chip = req.body['Chip'];
@@ -44,68 +47,6 @@ router.post('/', async (req, res, next) => {
 });
 
 
-router.post('/assign', async (req, res, next) => {
-    const nombre = req.body.nombre;
-    const Chip = req.body.Chip;
-    const raza = req.body.raza;
-    if (nombre && Chip && raza) {
-	models.perro.findOne({
-            where: {
-                Chip: Chip
-            }
-        }).then(perro => {
-            if (perro) {
-                models.paseo.findOne({
-                    where: {
-                        paseador: paseador
-                    }
-                }).then(classX => {
-                    if (classX) {
-                        perro.addClasses([classX]);
-                        res.json({
-                            status: 1,
-                            statusCode: 'perro/paseo-assigned',
-                            data: {
-                                perro: perro.toJSON(),
-                                'paseo': classX.toJSON()
-                            }
-                        });
-                    } else {
-                        res.status(400).json({
-                            status: 0,
-                            statusCode: 'perro/paseo-not-found',
-                            description: "No se pudo encotnrar el paseo"
-                        });
-                    }
-                }).catch(error => {
-                    res.status(400).json({
-                        status: 0,
-                        statusCode: 'database/error',
-                        description: error.toString()
-                    });
-                });
-            } else {
-                res.status(400).json({
-                    status: 0,
-                    statusCode: 'perro/not-found',
-                    description: "No se pudo encontrar el perro"
-                });
-            }
-        }).catch(error => {
-            res.status(400).json({
-                status: 0,
-                statusCode: 'database/error',                description: error.toString()
-            });
-        });
-    } else {
-        res.status(400).json({
-            status: 0,
-            statusCode: 'perro/wrong-parameter',
-            description: 'Parametros ingresados invalidos :('
-        });
-    }
-});
-
 // /* POST  perro listing.
 //     Asigna un ID de un dueño que exista a un perro
 //     Example: /2/user
@@ -130,52 +71,55 @@ router.post('/assign', async (req, res, next) => {
 //                               metodo DELETE 
 
 /* DELETE  perro listing.
-    Example: /delete/2
-    Body: UserId       En el body recibe el id del usuario al que le corresponde 
-
+    Example: /delete/
+    Body: nombreperro, email y password
+    La idea es que en el frontend uno seleccion el nombre del perro  
  */
-router.delete('/delete/:id', async (req, res, next) => {
-    const idperro = req.params.id;
-    const usuarioid = req.body.UserId;
-    if (numerito) {
-        models.perro.findOne({
-            where: {
-                id: numerito,
-                UserId: usuarioid
-            }
-        }).then(perro => {
-            if (perro) {
-                res.json({
-                    status: 1,
-                    statusCode: 'perro/found',
-                    data: perro.toJSON()
-                });
-                models.perro.destroy({ 
-                    where: {
-                        id: idperro
-                    }
-                })
-            } else {
-                res.status(400).json({
-                    status: 0,
-                    statusCode: 'perro/not-found',
-                    description: 'Este id no corresponde a ninguna mascota en nuestra base de datos'
-                });
-            }
-        }).catch(error => {
+router.delete('/delete/', async (req, res, next) => {
+    const nombreperro = req.body.nombreperro
+    const email = req.body.email;
+    const password = req.body.password; 
+    models.user.findOne({
+        where: {
+            email: email,
+            password: password
+        }
+    }).then(userencontrado => {
+        if(userencontrado) {
+            const iddueno = userencontrado.id;
+            models.perro.findOne({
+                where: {
+                nombre: nombreperro,
+                UserId: iddueno
+                }
+            }).then(perroencontrado => {
+                if(perroencontrado) {
+                    perroencontrado.destroy()
+                    .then(chao => {
+                        res.json({
+                            status: 1,
+                            statusCode: 'perro/eliminado',
+                            data: chao.toJSON()
+                        });
+                    });
+                }
+                else {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'perro/not-found',
+                        description: 'El perro con ese nombre no existe'
+                    });
+                }
+            });
+        }
+        else {
             res.status(400).json({
                 status: 0,
-                statusCode: 'database/error',
-                description: error.toString()
+                statusCode: 'paseador/not-found',
+                description: 'No se encontro al user'
             });
-        });
-    } else {
-        res.status(400).json({
-            status: 0,
-            statusCode: 'perro/wrong-id',
-            description: 'Reingrese el id de la mascota que desea borrar'
-        });
-    }
+        }
+    });
 });
 
 //                                    metodos GET

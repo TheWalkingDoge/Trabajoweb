@@ -72,22 +72,24 @@ router.post('/:id/perro', async (req, res, next) => {
 /*    POST   user listing 
 
         CREAR un PERRO desde el USER y al mismo tiempo asignarlo(id) al usuario(id)
-        Example :  /create/perro/1
+        Example :  /create/dog/
+        se cambio 'dog' por 'perro', porque daba un error de headers
+        el mail y la pass se mandan por body OJO
         FUNCIONANDO - este es el que se conserva-
 */
-router.post('/create/perro/:id', async (req, res, next) => {
-    const iddueno = req.params.id;
+router.post('/create/dog', async (req, res, next) => {
     const nombre = req.body['nombre']; 
     const Chip = req.body['Chip'];
     const raza = req.body['raza'];
+    const email = req.body['email'];
+    const password = req.body['password'];
     if (nombre && Chip && raza) {
         models.perro.create({
             nombre: nombre,
             Chip: Chip,
             raza: raza
-        })
-        .then(perro => {
-            if (perro) {
+        }).then(perro=>{
+            if(perro) {
                 res.json({
                     status: 1,
                     statusCode: 'perro/created',
@@ -95,13 +97,13 @@ router.post('/create/perro/:id', async (req, res, next) => {
                 });
                 models.user.findOne({
                     where: {
-                        id: iddueno
+                        email: email,
+                        password: password
                     }
                 }).then(user => {
                     user.addPerros(perro);
                 })
             }
-            
             else {
                 res.status(400).json({
                     status: 0,
@@ -109,15 +111,14 @@ router.post('/create/perro/:id', async (req, res, next) => {
                     description: "No se pudo crear su mascota"
                 });
             }
-        }).catch(error => {
+            }).catch(error => {
             res.status(400).json({
                 status: 0,
                 statusCode: 'database/error',
                 description: error.toString()
             });
         });
-    } 
-    
+    }
     else {
         res.status(400).json({
             status: 0,
@@ -202,6 +203,7 @@ router.get('/:nombre', async (req, res, next) => {
 /* GET users listing.
 
     Example: /users/max@zl.cl
+    NO OCUPAR---->no tiene utilidad alguna
 
  */
 router.get('/email/:email', async (req, res, next) => {
@@ -244,7 +246,7 @@ router.get('/email/:email', async (req, res, next) => {
 //              metodo DELETE 
 
 /* DELETE  user listing.
-
+    NO SE OCUPA--->no tiene utilidad para la app.
     BORRAR un USER (debe borrar todos los perros asociados a el)
     Example: /delete/2
  */

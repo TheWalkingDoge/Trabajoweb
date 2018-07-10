@@ -6,48 +6,74 @@ const models = require('../models');
 
 /*--Crear el paseo con el dueño */
 // Permite al dueño crear un paseo 
-//     Example: /1/
-//     Body: Horario B
+//     Example: /paseo/create
+//     Body: horario, nombreperro, email y password
 
-router.post('/:id', async (req, res, next) => {
-    const iddueno = req.params.id;
+router.post('/create', async (req, res, next) => {
     const horario = req.body['horario'];
-
-    if (horario && iddueno) {
-        models.paseo.create({
-            // comentario: comentario,
-            horario: horario,
-            dueno: iddueno
-
-
-        }).then(paseo => {
-            if (paseo) {
-                res.json({
-                    status: 1,
-                    statusCode: 'paseo/created',
-                    data: paseo.toJSON()
-                });
-            } else {
-                res.status(400).json({
-                    status: 0,
-                    statusCode: 'paseo/error',
-                    description: "No se pudo crear el paseo"
-                });
-            }
-        }).catch(error => {
+    const nombreperro = req.body['nombreperro'];
+    const email = req.body['email'];
+    const password = req.body['password'];
+    //const dia = req.body['dia'];
+    models.user.findOne({
+        where: {
+            email: email,
+            password: password
+        }
+    }).then(userencontrado => {
+        if(userencontrado) {
+            const iddueno = userencontrado.id;
+            models.perro.findOne({
+                where: {
+                nombre: nombreperro,
+                UserId: iddueno
+                }
+            }).then(perroencontrado => {
+                if(perroencontrado) {
+                    models.paseo.create({
+                        horario: horario,
+                        dueno: iddueno
+                        //dia: dia
+                    }).then(paseocreado => {
+                        if(paseocreado){
+                            paseocreado.addPaseito(perroencontrado);
+                            paseocreado.update({
+                                dueno: iddueno,
+                            }).then(chao => {
+                                res.json({
+                                    status: 1,
+                                    statusCode: 'paseo/created',
+                                    data: chao.toJSON(),
+                                    description: "Paseo creado correctamente"
+                                });
+                            });
+                        }
+                        else {
+                            res.status(400).json({
+                                status: 0,
+                                statusCode: 'paseo/error',
+                                description: "No se pudo crear el paseo"
+                            }); 
+                        }
+                    });
+                }
+                else {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'perro/error',
+                        description: "No se encontro al perro"
+                    });   
+                }
+            });
+        }
+        else {
             res.status(400).json({
                 status: 0,
-                statusCode: 'database/error',
-                description: error.toString()
+                statusCode: 'user/error',
+                description: "No se pudo encontrar al usuario"
             });
-        });
-    } else {
-        res.status(400).json({
-            status: 0,
-            statusCode: 'paseo/wrong-body',
-            description: 'The body is wrong! :('
-        });
-    }
+        }
+    });
 });
 
 /*--ESCRIBIR EL COMENTARIO FINAL DESPUES DEL PASEO */
@@ -382,5 +408,55 @@ router.get('/dueno/:dueno', async (req, res, next) => {
         });
     }
 });
+
+
+/*METODO DE PRUEBA PARA RETORNAR EL NOMBRE DEL PERRO QUE SE ENCUENTRA EN EL PASE
+    Cuando se encuentra el paseo, la funcion getPaseito() retorna un objeto con mucha info, pero 
+    hayperritos[0].nombre retorna solo el nombre del perro, asi el frontend trabaja con los datos precisos.
+
+*/
+
+router.get('/all/:id', async (req, res, next) => {
+    //const ventana = req.params.horario;
+    const idpaseo = req.params.id;
+    models.paseo.findOne({
+        where: {
+            id: idpaseo
+        }
+    }).then(paseo => {
+            if (paseo) {
+                paseo.getPaseito(
+                    {
+                    attributes: [
+                        'nombre','raza'
+                    ]
+                }
+            )
+                .then(hayperritos => {
+                    //console.log('abajo va el indice 0 del hayperritos');
+                    //console.log(hayperritos[{nombre}]);
+                    //console.log(hayperritos[0].nombre);
+                    res.json({
+                        status: 1,
+                        statusCode: 'paseo/listing',
+                        data: hayperritos[0].nombre
+                    });
+                });
+            } else {
+                res.status(400).json({
+                    status: 0,
+                    statusCode: 'paseo/not-found',
+                    description: 'No se ha encontrado información de este paseo'
+                });
+            }
+        }).catch(error => {
+        res.status(400).json({
+            status: 0,
+            statusCode: 'database/error',
+            description: error.toString()
+        });
+    });
+});
+
 
 module.exports = router;
