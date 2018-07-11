@@ -47,6 +47,46 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+router.post('/tomarpaseo', async (req, res, next) => {
+    const idpaseo = req.body.idpaseo;
+    const email = req.body.email;
+    const password = req.body.password;
+    models.paseador.findOne({
+        where: {
+            email: email,
+            password: password
+        }
+    }).then(haypaseador => {
+        if (haypaseador) {
+            const iddueno = haypaseador.id;
+            console.log(iddueno);
+            models.paseo.update({
+                paseador: iddueno,
+                estado: 1,
+            }, {
+                where: {
+                    id: idpaseo, 
+                }
+            }).then(tomado => {
+                res.json({
+                    status: 1,
+                    statusCode: 'paseo/tomado',
+                    data: tomado
+                });
+            });
+        }
+        else {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'paseador/not-found',
+                description: 'No se encontro al paseador'
+            });
+        }
+    })
+    .catch(next);
+
+});
+
 
 /* GET paseador listing.
     Example: /paseador/all
