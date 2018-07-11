@@ -47,6 +47,7 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+
 router.post('/tomarpaseo', async (req, res, next) => {
     const idpaseo = req.body.idpaseo;
     const email = req.body.email;
@@ -59,7 +60,6 @@ router.post('/tomarpaseo', async (req, res, next) => {
     }).then(haypaseador => {
         if (haypaseador) {
             const iddueno = haypaseador.id;
-            console.log(iddueno);
             models.paseo.update({
                 paseador: iddueno,
                 estado: 1,

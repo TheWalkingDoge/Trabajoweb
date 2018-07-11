@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
         dia: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        mascota: {
+            type: DataTypes.STRING,
+            allowNull: false
         } 
 
     });
