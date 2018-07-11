@@ -215,7 +215,7 @@ router.get('/all/', async (req, res, next) => {
 });
 
 
-/* GET PASEOS DUEÑO FINALIZADOS(arreglar).
+/* GET PASEOS DUEÑO FINALIZADOS.
 
     Example: /id/78
 
@@ -264,9 +264,7 @@ router.get('/dueno/finalizados', async (req, res, next) => {
 });
 
 
-/* GET PASEOS PASEADOR FINALIZADOS(arreglar).
-
-    Example: /id/78
+/* GET PASEOS PASEADOR FINALIZADOS.
 
  */
 router.get('/paseador/finalizados', async (req, res, next) => {
@@ -284,6 +282,54 @@ router.get('/paseador/finalizados', async (req, res, next) => {
                 where: {
                     paseador: idpaseador,
                     estado: 2
+                }
+            }).then(paseoencontrado => {
+                if(paseoencontrado){
+                    res.json({
+                        status: 1,
+                        statusCode: 'paseo/listing',
+                        data: paseoencontrado
+                    });
+                }
+                else {
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'user/error',
+                        description: "No hay paseos finalizados"
+                    });
+                }
+            });
+        }
+        else {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'user/error',
+                description: "No se pudo encontrar al usuario"
+            });
+        }
+    });
+});
+
+/* GET Muestra el paseo que el paseador ha tomado(Unico).
+
+    Example: /id/78
+
+ */
+router.get('/paseador/pendiente', async (req, res, next) => {
+    const email = req.headers.email;
+    const password = req.headers.password;
+    models.paseador.findOne({
+        where: {
+            email: email,
+            password: password
+        }
+    }).then(paseadorencontrado => {
+        if(paseadorencontrado){
+            const idpaseador = paseadorencontrado.id;
+            models.paseo.findAll({
+                where: {
+                    paseador: idpaseador,
+                    estado: 1
                 }
             }).then(paseoencontrado => {
                 if(paseoencontrado){

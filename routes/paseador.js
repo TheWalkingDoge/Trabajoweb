@@ -59,24 +59,40 @@ router.post('/tomarpaseo', async (req, res, next) => {
         }
     }).then(haypaseador => {
         if (haypaseador) {
-            const idpaseador = haypaseador.id;
             const nombrepaseador = haypaseador.nombre;
             const apellidopaseador = haypaseador.apellido;
             const nombrecompleto = nombrepaseador +' '+ apellidopaseador;
-            models.paseo.update({
-                nombrepaseador: nombrecompleto,
-                paseador: idpaseador,
-                estado: 1,
-            }, {
+            const idpaseador = haypaseador.id;
+            models.paseo.findOne({
                 where: {
-                    id: idpaseo, 
+                    paseador: idpaseador,
+                    estado: 1
                 }
-            }).then(tomado => {
-                res.json({
-                    status: 1,
-                    statusCode: 'paseo/tomado',
-                    data: tomado
-                });
+            }).then(paseopendiente => {
+                if(paseopendiente){
+                    res.status(400).json({
+                        status: 0,
+                        statusCode: 'paseador/imposibilitado',
+                        description: 'El paseador tiene un paseo pendiente por eso no puede tomar mas.'
+                    });
+                }
+                else {
+                    models.paseo.update({
+                        nombrepaseador: nombrecompleto,
+                        paseador: idpaseador,
+                        estado: 1,
+                    }, {
+                        where: {
+                            id: idpaseo, 
+                        }
+                    }).then(tomado => {
+                        res.json({
+                            status: 1,
+                            statusCode: 'paseo/tomado',
+                            data: tomado
+                        });
+                    });
+                }
             });
         }
         else {
