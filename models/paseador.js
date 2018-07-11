@@ -34,11 +34,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             isEmail: true,
             allowNull: false
-        },
-        estado: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
         }
+
     });
     paseador.associate= (models) => {
         paseador.hasMany(models.paseo, {

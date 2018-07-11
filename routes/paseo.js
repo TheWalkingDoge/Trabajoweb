@@ -94,6 +94,7 @@ router.post('/paseador/tomarpaseo', async (req, res, next) => {
             const iddueno = userencontrado.id;
             models.paseo.update({
                 idpaseador: iddueno,
+                estado: 1,
             }, {
                 where: {
                     paseoId: idpaseo, 
@@ -118,6 +119,7 @@ router.post('/paseador/tomarpaseo', async (req, res, next) => {
     .catch(next);
 
 });
+
 
 /*FIN*/
 

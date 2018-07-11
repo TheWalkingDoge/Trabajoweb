@@ -33,10 +33,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             isEmail: true,
             allowNull: false
-        },
-        estado: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1
         }
     });
     user.associate= (models) => {

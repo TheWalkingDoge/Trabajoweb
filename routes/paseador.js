@@ -7,12 +7,14 @@ router.post('/', async (req, res, next) => {
     const apellido = req.body['apellido'];
     const telefono = req.body['telefono'];
     const password = req.body['password'];
-    if (nombre && apellido && telefono && password) {
+    const email = req.body['email'];
+    if (nombre && apellido && telefono && password && email) {
         models.paseador.create({
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
             password: password,
+            email: email,
             estado: 0
         }).then(paseador => {
             if (paseador) {
