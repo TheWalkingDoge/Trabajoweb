@@ -22,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         dueno: {
             type: DataTypes.INTEGER,
             allowNull: true
+        },
+        dia: {
+            type: DataTypes.STRING,
+            allowNull: false
         } 
 
     });

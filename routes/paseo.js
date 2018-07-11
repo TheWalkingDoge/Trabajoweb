@@ -14,7 +14,7 @@ router.post('/create', async (req, res, next) => {
     const nombreperro = req.body['nombreperro'];
     const email = req.body['email'];
     const password = req.body['password'];
-    //const dia = req.body['dia'];
+    const dia = req.body['dia'];
     models.user.findOne({
         where: {
             email: email,
@@ -32,8 +32,8 @@ router.post('/create', async (req, res, next) => {
                 if(perroencontrado) {
                     models.paseo.create({
                         horario: horario,
-                        dueno: iddueno
-                        //dia: dia
+                        dueno: iddueno,
+                        dia: dia
                     }).then(paseocreado => {
                         if(paseocreado){
                             paseocreado.addPaseito(perroencontrado);
@@ -75,6 +75,52 @@ router.post('/create', async (req, res, next) => {
         }
     });
 });
+
+
+
+/*--TOMAR PASEO DESDE PASEADOR--*/
+// En el body debe venir idpaseo, email y password
+router.post('/paseador/tomarpaseo', async (req, res, next) => {
+    const idpaseo = req.body.idpaseo;
+    const email = req.body.email;
+    const password = req.body.password;
+    models.paseador.findOne({
+        where: {
+            email: email,
+            password: password
+        }
+    }).then(haypaseador => {
+        if (haypaseador) {
+            const iddueno = userencontrado.id;
+            models.paseo.update({
+                idpaseador: iddueno,
+            }, {
+                where: {
+                    paseoId: idpaseo, 
+                }
+            
+            }).then(tomado => {
+                res.json({
+                    status: 1,
+                    statusCode: 'paseo/tomado',
+                    data: tomado
+                });
+            });
+        }
+        else {
+            res.status(400).json({
+                status: 0,
+                statusCode: 'paseador/not-found',
+                description: 'No se encontro al paseador'
+            });
+        }
+    })
+    .catch(next);
+
+});
+
+/*FIN*/
+
 
 /*--ESCRIBIR EL COMENTARIO FINAL DESPUES DEL PASEO */
 //Hay que pasar el id del paseo para guardar el comentario
