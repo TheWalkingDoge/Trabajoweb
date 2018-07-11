@@ -91,15 +91,14 @@ router.post('/paseador/tomarpaseo', async (req, res, next) => {
         }
     }).then(haypaseador => {
         if (haypaseador) {
-            const iddueno = userencontrado.id;
+            const iddueno = haypaseador.id;
             models.paseo.update({
-                idpaseador: iddueno,
+                paseador: iddueno,
                 estado: 1,
             }, {
                 where: {
-                    paseoId: idpaseo, 
+                    id: idpaseo, 
                 }
-            
             }).then(tomado => {
                 res.json({
                     status: 1,
