@@ -2,40 +2,16 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
+
+
+
+
 //                     metodos POST 
 
 /*--Crear el paseo con el dueño */
 // Permite al dueño crear un paseo 
 //     Example: /paseo/create
 //     Body: horario, nombreperro, email y password
-
-// const editar_json = (req,res,next) => {
-//     for(var id in req){
-//         const paseo = req[id].id;
-//         const perro = models.evento.findOne({
-//             where: {
-//                 paseoId: paseo
-//             }
-//         });
-//         const id_perro = perro.perroId;
-
-//         id = id +1;
-//     }
-
-
-//     models.evento.findOne({
-//         attributes: [
-//             'perroId'
-//         ]
-//     },{
-//         where: {
-//             paseoId: id_paseo
-//         }
-//     }
-//     );
-// }
-
-
 router.post('/create', async (req, res, next) => {
     const horario = req.body['horario'];
     const nombreperro = req.body['nombreperro'];
@@ -50,6 +26,9 @@ router.post('/create', async (req, res, next) => {
     }).then(userencontrado => {
         if(userencontrado) {
             const iddueno = userencontrado.id;
+            const nombredueno = userencontrado.nombre;
+            const apellidodueno = userencontrado.apellido;
+            const nombrecompleto = nombredueno +' '+ apellidodueno;
             models.perro.findOne({
                 where: {
                 nombre: nombreperro,
@@ -67,6 +46,7 @@ router.post('/create', async (req, res, next) => {
                             paseocreado.addPaseito(perroencontrado);
                             paseocreado.update({
                                 dueno: iddueno,
+                                nombredueno: nombrecompleto,
                             }).then(chao => {
                                 res.json({
                                     status: 1,
@@ -306,13 +286,7 @@ router.get('/paseador/finalizados', async (req, res, next) => {
                     estado: 2
                 }
             }).then(paseoencontrado => {
-                
                 if(paseoencontrado){
-                    for(var id in paseoencontrado){
-                        const paseo = paseoencontrado[id].id;
-    
-                        id = id +1;
-                    }
                     res.json({
                         status: 1,
                         statusCode: 'paseo/listing',

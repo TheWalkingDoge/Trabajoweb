@@ -30,7 +30,15 @@ module.exports = (sequelize, DataTypes) => {
         mascota: {
             type: DataTypes.STRING,
             allowNull: false
-        } 
+        },
+        nombrepaseador: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        nombredueno: {
+            type: DataTypes.STRING,
+            allowNull: true
+        }
 
     });
     

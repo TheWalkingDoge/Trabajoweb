@@ -59,9 +59,13 @@ router.post('/tomarpaseo', async (req, res, next) => {
         }
     }).then(haypaseador => {
         if (haypaseador) {
-            const iddueno = haypaseador.id;
+            const idpaseador = haypaseador.id;
+            const nombrepaseador = haypaseador.nombre;
+            const apellidopaseador = haypaseador.apellido;
+            const nombrecompleto = nombrepaseador +' '+ apellidopaseador;
             models.paseo.update({
-                paseador: iddueno,
+                nombrepaseador: nombrecompleto,
+                paseador: idpaseador,
                 estado: 1,
             }, {
                 where: {
